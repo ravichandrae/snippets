@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class FirstMissingPositiveNumber {
     public static void main(String []args) {
         testFirstMissingPositiveNumber();
@@ -10,7 +12,7 @@ public class FirstMissingPositiveNumber {
      */
     private static int firstMissingPositiveNumber(int []arr) {
         int positiveIndex = groupPositiveNegative(arr);
-        if(positiveIndex < 0) { //null or empty array
+        if(positiveIndex < 0) { //null
             return -1;
         }
         if(positiveIndex == arr.length) // arr contains all negatives
@@ -49,6 +51,35 @@ public class FirstMissingPositiveNumber {
         System.out.println(firstMissingPositiveNumber(new int[]{-9, -3, -5, -4, -2})); //Expected output: 1
         System.out.println(firstMissingPositiveNumber(new int[]{-6, -8, 0, -5, -9, 1})); //Expected output: 2
         System.out.println(firstMissingPositiveNumber(new int[]{-6, -8, 2, -5, 3, 1})); //Expected output: 4
+    }
+
+    private static int firstMissingPositive(int []arr) {
+        if(null == arr)
+            return -1;
+        if(arr.length == 0)
+            return 1;
+        Arrays.sort(arr);
+        int i;
+        //Skip all non-negatives
+        for(i = 0; i < arr.length && arr[i] < 1; i++){}
+
+        int num = 1;
+        //Expect the sequence to start from 1, exit when there is a break in the sequence
+        while(i < arr.length && arr[i] == num) {
+            num++;
+            i++;
+        }
+        return num;
+    }
+
+    private static void testFirstMissingPositive() {
+        System.out.println(firstMissingPositive(new int[]{3})); //Expected output: 1
+        System.out.println(firstMissingPositive(new int[]{})); //Expected output: 1
+        System.out.println(firstMissingPositive(new int[]{8, 0, -3, 6, -1, 9})); //Expected output: 1
+        System.out.println(firstMissingPositive(new int[]{5, 1, 4, 6, 7, 2})); //Expected output: 3
+        System.out.println(firstMissingPositive(new int[]{-9, -3, -5, -4, -2})); //Expected output: 1
+        System.out.println(firstMissingPositive(new int[]{-6, -8, 0, -5, -9, 1})); //Expected output: 2
+        System.out.println(firstMissingPositive(new int[]{-6, -8, 2, -5, 3, 1})); //Expected output: 4
     }
 
     /**
